@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include "include/tcp_client.h"
+#include "include/timer.h"
 
 //int main() {
 //    //创建套接字
@@ -32,22 +33,34 @@
 //    return 0;
 //}
 //
+
+//int main() {
+//    TCPClient *client = new TCPClient();
+//    bool ok = client->dial("127.0.0.1", 10000);
+//    if (!ok) {
+//        std::cout << "dial error" << std::endl;
+//    }
+//    ok = client->send_data("hello from c++ client");
+//    if (!ok) {
+//        std::cout << "send data error" << std::endl;
+//    }
+//
+//    auto data = client->read();
+////    auto data = client->receive(1024);
+//    if (std::get<1>(data)) {
+//        std::cout << "receive data: " << std::get<0>(data) << std::endl;
+//    }
+//
+//    client->exit();
+//}
+
+void print() {
+    std::cout << "print" << std::endl;
+}
+
 int main() {
-    TCPClient *client = new TCPClient();
-    bool ok = client->dial("127.0.0.1", 10000);
-    if (!ok) {
-        std::cout << "dial error" << std::endl;
-    }
-    ok = client->send_data("hello from c++ client");
-    if (!ok) {
-        std::cout << "send data error" << std::endl;
-    }
+    Timer timer;
+    timer.start(1000, print);
 
-    auto data = client->read();
-//    auto data = client->receive(1024);
-    if (std::get<1>(data)) {
-        std::cout << "receive data: " << std::get<0>(data) << std::endl;
-    }
-
-    client->exit();
+    pthread_exit(NULL);
 }
